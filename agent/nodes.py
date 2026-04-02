@@ -7,21 +7,9 @@ import logging
 from datetime import datetime
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_ollama import ChatOllama
+from config.settings import OLLAMA_MODEL, OLLAMA_URL, ARXIV_CATEGORIES, KEYWORDS, MAX_PER_FEED
 
 logger = logging.getLogger(__name__)
-
-ARXIV_CATEGORIES = ["cs.LG", "cs.AI", "cs.CV"]
-
-KEYWORDS = [
-    "explainab", "interpretab", "attribution",
-    "LRP", "CRP", "SHAP", "saliency", "prototype",
-    "pruning", "medical imaging", "skin lesion",
-    "mechanistic", "point cloud",
-]
-
-OLLAMA_MODEL   = "llama3.2:3b"   # any model
-OLLAMA_URL     = "http://localhost:11434"
-MAX_PER_FEED   = 20
 
 llm = ChatOllama(model=OLLAMA_MODEL, base_url=OLLAMA_URL, temperature=0.2)
 
