@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, START, END
 from agent.state import AgentState
 from tools.arxiv_fetcher import fetch_papers
 from tools.memory import filter_unseen, mark_seen
-from tools.relevance_filter import filter_relevant, should_summarise
+from tools.semantic_filter import filter_relevant, should_summarise
 from tools.digest_formatter import summarise_papers
 from tools.delivery import save_digest
 
