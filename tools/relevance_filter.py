@@ -35,5 +35,5 @@ def filter_relevant(state):
 
 
 def should_summarise(state):
-    """Conditional edge: skip summarisation when no relevant papers were found."""
+    """Conditional edge: skip summarisation when no relevant papers were found"""
     return "continue" if state.get("relevant_papers") else "skip"

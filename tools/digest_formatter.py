@@ -5,21 +5,17 @@ from datetime import datetime
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_ollama import ChatOllama
 from config.settings import OLLAMA_MODEL, OLLAMA_URL
+from prompts import load_prompt
 
 logger = logging.getLogger(__name__)
 
 _llm = ChatOllama(model=OLLAMA_MODEL, base_url=OLLAMA_URL, temperature=0.2)
 
-_PROMPT = (
-    "Summarise this ML paper in 2 sentences. "
-    "Focus on the method and why it matters for XAI or interpretability.\n\n"
-    "Title: {title}\n"
-    "Abstract: {abstract}"
-)
+_PROMPT = load_prompt("summarise_paper")
 
 
 def summarise_papers(state):
-    """Generate 2-sentence LLM summaries and assemble a Markdown digest."""
+    """Generate 2-sentence LLM summaries and assemble Markdown"""
     summarised = []
     for paper in state["relevant_papers"]:
         try:

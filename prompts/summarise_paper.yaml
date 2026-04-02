@@ -1,0 +1,26 @@
+current_version: "1.1"
+
+versions:
+  "1.0":
+    released: "2026-04-03"
+    note: "Initial prompt extracted from digest_formatter.py"
+    template: |
+      Summarise this ML paper in 2 sentences,
+      focus on the method and why it matters for XAI or interpretability.
+
+      Title: {title}
+      Abstract: {abstract}
+
+  "1.1":
+    released: "2026-04-03"
+    note: >
+      Added explicit instruction to name the primary technique in sentence 1
+      and state the practical benefit in sentence 2. Reduces generic
+      summaries observed during manual review.
+    template: |
+      Summarise this ML paper in exactly 2 sentences.
+      Sentence 1: name the primary technique and what it does.
+      Sentence 2: explain why it matters for XAI or interpretability practitioners.
+
+      Title: {title}
+      Abstract: {abstract}
