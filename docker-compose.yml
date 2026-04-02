@@ -1,0 +1,29 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  agent:
+    build: .
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      # Override the default localhost URL to reach the sidecar by service name
+      AGENT_OLLAMA_URL: "http://ollama:11434"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./outputs:/app/outputs
+
+volumes:
+  ollama_data:
