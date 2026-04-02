@@ -1,0 +1,60 @@
+name: Daily ArXiv Digest
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # 07:00 UTC every morning
+  workflow_dispatch:        # allow manual trigger from the Actions tab
+
+permissions:
+  contents: write           # needed to push the committed digest
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+
+    services:
+      ollama:
+        image: ollama/ollama:latest
+        ports:
+          - 11434:11434
+        options: >-
+          --health-cmd "curl -sf http://localhost:11434/api/tags"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Pull Ollama model
+        env:
+          AGENT_OLLAMA_URL: http://localhost:11434
+        run: |
+          curl -sf http://localhost:11434/api/tags   # confirm sidecar is up
+          curl -X POST http://localhost:11434/api/pull \
+               -H "Content-Type: application/json" \
+               -d '{"name":"llama3.2:3b","stream":false}'
+
+      - name: Run agent
+        env:
+          AGENT_OLLAMA_URL: http://localhost:11434
+        run: python main.py
+
+      - name: Commit digest
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/digests/
+          git diff --staged --quiet \
+            || git commit -m "digest: $(date -u +%Y-%m-%d) [skip ci]"
+          git push
