@@ -25,5 +25,3 @@ def build_graph():
     g.add_edge("save_digest",      "mark_seen")
     g.add_edge("mark_seen",        END)
     return g.compile()
-
-agent = build_graph()

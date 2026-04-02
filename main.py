@@ -20,8 +20,8 @@ def main():
     args = parser.parse_args()
 
     if args.dry_run:
-        from agent import nodes
-        nodes.should_summarise = lambda state: "skip"
+        import tools.semantic_filter as sf
+        sf.should_summarise = lambda state: "skip"
     graph = build_graph()
 
     initial_state = {
