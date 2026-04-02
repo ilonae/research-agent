@@ -1,4 +1,4 @@
-"""Re-exports for backwards compatibility. Logic lives in tools/."""
+"""Re-exports, logic in tools/"""
 
 from tools.arxiv_fetcher import fetch_papers
 from tools.relevance_filter import filter_relevant, should_summarise

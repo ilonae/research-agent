@@ -1,1 +1,6 @@
 **/__pycache__/**
+.env
+
+# Ignore generated digests but keep the directory and the sample
+outputs/digests/*.md
+!outputs/digests/2026-04-03.md
