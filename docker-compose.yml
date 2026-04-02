@@ -23,7 +23,7 @@ services:
       - path: .env
         required: false
     volumes:
-      - ./outputs:/app/outputs
+      - ./outputs:/app/outputs   # digests + seen_papers.db persist on host
 
 volumes:
   ollama_data:
