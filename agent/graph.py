@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, START, END
 from agent.state import AgentState
 from tools.arxiv_fetcher import fetch_papers
 from tools.memory import filter_unseen, mark_seen
-from tools.relevance_filter import filter_relevant, should_summarise
+from tools.semantic_filter import filter_relevant, should_summarise
 from tools.digest_formatter import summarise_papers
 from tools.delivery import save_digest
 
@@ -25,5 +25,3 @@ def build_graph():
     g.add_edge("save_digest",      "mark_seen")
     g.add_edge("mark_seen",        END)
     return g.compile()
-
-agent = build_graph()
