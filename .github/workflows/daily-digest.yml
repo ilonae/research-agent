@@ -12,17 +12,6 @@ jobs:
   digest:
     runs-on: ubuntu-latest
 
-    services:
-      ollama:
-        image: ollama/ollama:latest
-        ports:
-          - 11434:11434
-        options: >-
-          --health-cmd "curl -sf http://localhost:11434/api/tags"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,14 +25,18 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Pull Ollama model
-        env:
-          AGENT_OLLAMA_URL: http://localhost:11434
+      - name: Install and start Ollama
         run: |
-          curl -sf http://localhost:11434/api/tags   # confirm sidecar is up
-          curl -X POST http://localhost:11434/api/pull \
-               -H "Content-Type: application/json" \
-               -d '{"name":"llama3.2:3b","stream":false}'
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama serve &
+          # Wait until the API is accepting connections
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:11434/api/tags && break
+            sleep 2
+          done
+
+      - name: Pull Ollama model
+        run: ollama pull llama3.2:3b
 
       - name: Run agent
         env:
