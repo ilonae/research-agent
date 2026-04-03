@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "arxiv-xai-digest"
 version = "0.1.0"
-description = "A daily ArXiv digest agent for XAI and interpretability research"
+description = "A configurable daily ArXiv digest agent — filter and summarise papers in any research area"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Ilona Eisenbraun" }]
 requires-python = ">=3.11"
-keywords = ["arxiv", "xai", "interpretability", "llm", "agent", "langgraph"]
+keywords = ["arxiv", "research", "digest", "llm", "agent", "langgraph", "semantic-search"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
