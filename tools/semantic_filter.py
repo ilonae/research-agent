@@ -4,8 +4,8 @@ Each paper's title and abstract scores against a set of anchor sentences that de
 the individual research topic.  A paper passes if its max cosine
 similarity across all anchors meets the configured threshold.
 
-This catches paraphrased concepts that share no keywords — e.g. "feature attribution" and "attribution maps" are 
-semantically close even though neither substring contains the other
+This catches paraphrased concepts that share no keywords — e.g. "robot learning" and
+"learning from demonstration" are semantically close even though neither substring contains the other
 """
 
 import logging
