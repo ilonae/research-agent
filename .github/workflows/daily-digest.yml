@@ -1,4 +1,4 @@
-name: Daily ArXiv Digest
+name: Daily ArXiv Paper Digest
 
 on:
   schedule:
